@@ -4,9 +4,10 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/todo-list">TodoList</router-link> |
       <router-link to="/issue-list">IssueList</router-link> |
-      <router-link to="/todos-issue">TodosIssue</router-link> 
+      <router-link to="/todos-issue">TodosIssue</router-link> |
+      <!--<router-link to="/todo-item">TodoItem</router-link> -->
     </nav>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 

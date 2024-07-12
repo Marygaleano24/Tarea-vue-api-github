@@ -6,21 +6,10 @@
             <el-input placeholder="Todo" v-model="todo"></el-input>
         </form>
         
-        <!-- Área de visualización de tareas -->
+        <!-- Área de visualización de tareas y problemas -->
         <el-row :gutter="12">
-            <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" :index="index" @remove-todo="removeTodo" />
-            
-            <!-- Área de visualización de issues -->
-            <el-col :span="12" v-for="(issue, index) in issues" :key="issue.id">
-                <el-card class="box-card" shadow="hover" style="margin: 5px 0;">
-                    <el-row :gutter="12">
-                        <el-col :span="21">{{ issue.title }}</el-col>
-                        <el-col :span="3">
-                            <el-button @click="closeIssue(index)" type="success" icon="el-icon-check" circle></el-button>
-                        </el-col>
-                    </el-row>
-                </el-card>
-            </el-col>
+            <TodoItem v-for="(todo, index) in todos" :key="index" :todo="todo" :index="index" @remove-todo="removeTodo" @close-issue="closeIssue" />
+            <TodoItem v-for="(issue, index) in issues" :key="issue.id" :todo="issue" :index="index" @remove-todo="removeTodo" @close-issue="closeIssue" />
         </el-row>
     </div>
 </template>
@@ -69,7 +58,7 @@ export default {
         getIssues() {
             client.get('issues')
                 .then((res) => {
-                    this.issues = res.data;
+                    this.issues = res.data.map(issue => ({ type: 'issue', issueName: issue.title, ...issue }));
                 });
         }
     },
